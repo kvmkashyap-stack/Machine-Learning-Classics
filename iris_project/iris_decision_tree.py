@@ -5,6 +5,7 @@ import seaborn as sns
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
@@ -27,6 +28,12 @@ def main():
         X, y, test_size=0.2, random_state=42
     )
 
+    scaler = StandardScaler()
+
+    
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+
    
     dt = DecisionTreeClassifier(random_state=42)
     dt.fit(X_train, y_train)
@@ -48,6 +55,7 @@ def main():
         xticklabels=iris.target_names,
         yticklabels=iris.target_names
     )
+    plt.show()
     
 
 
