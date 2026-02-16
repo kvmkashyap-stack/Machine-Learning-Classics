@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.decomposition import PCA
 
 
 def main():
@@ -49,6 +50,28 @@ def main():
         yticklabels=iris.target_names
     )
     plt.show()
+
+    pca=PCA(n_components=3)
+    X_train_pca=pca.fit_transform(X_train)
+
+    fig=plt.figure()
+    ax=fig.add_subplot(111,projection="3d")
+
+    scatter=ax.scatter(
+        X_train_pca[:,0],
+        X_train_pca[:,1],
+        X_train_pca[:,2],
+        c=y_train,
+        cmap="coolwarm"
+    )
+
+    ax.set_xlabel("PC1")
+    ax.set_ylabel("PC2")
+    ax.set_zlabel("PC3")
+
+    plt.title("PCA 3D Analysis")
+    plt.show()
+
 
 
 if __name__ == "__main__":
