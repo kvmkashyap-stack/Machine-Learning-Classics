@@ -7,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.manifold import TSNE
+from mpl_toolkits.mplot3d import Axes3D
 
 df = pd.read_csv("creditcard.csv")
 
@@ -47,6 +49,31 @@ print("RANDOM FOREST RESULTS")
 print("Accuracy:", accuracy_score(y_test, rf_pred))
 print(confusion_matrix(y_test, rf_pred))
 print(classification_report(y_test, rf_pred))
+
+
+tsne = TSNE(n_components=3, random_state=42, perplexity=30)
+X_tsne = tsne.fit_transform(X.sample(3000)) 
+y_sample = y.loc[X.sample(3000).index]
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(
+    X_tsne[:,0],
+    X_tsne[:,1],
+    X_tsne[:,2],
+    c=y_sample,
+    cmap='coolwarm',
+    alpha=0.7
+)
+
+ax.set_xlabel("TSNE-1")
+ax.set_ylabel("TSNE-2")
+ax.set_zlabel("TSNE-3")
+plt.title("3D t-SNE Visualization - Credit Card Fraud")
+plt.show()
+
 
 sample = X_test.iloc[[0]]
 pred = rf.predict(sample)
