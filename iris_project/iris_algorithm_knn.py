@@ -40,6 +40,7 @@ def main():
     print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
     cm = confusion_matrix(y_test, y_pred)
+    print(cm)
 
     sns.heatmap(
         cm,
